@@ -49,6 +49,6 @@ def ctrl_thread():
     write_ram1.read_nonblocking(0, write_addr+RAM_SIZE*4, RAM_SIZE) # from BlockRAM to DRAM
     write_ram1.wait()
 
-    print('sum=', sum)
+    print(('sum=', sum))
 
 ctrl_thread()

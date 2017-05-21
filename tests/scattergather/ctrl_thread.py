@@ -12,6 +12,6 @@ def ctrl_thread():
         channel.write(addr)
         sum = channel.read()
         addr += (SIZE * NUM_BANKS * (WIDTH / 8))
-    print('sum=', sum)
+    print(('sum=', sum))
 
 ctrl_thread()

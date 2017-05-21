@@ -17,7 +17,7 @@ def main():
         size += req_size
         sum = channel.read()
 
-    print('sum=', sum)
+    print(('sum=', sum))
     iochannel.write(sum)
 
 while True:

@@ -14,9 +14,9 @@ def wait_start():
     heap_offset = iochannel.read()
     start_addr = iochannel.read()
     goal_addr = iochannel.read()
-    print('heap_offset=%x' % heap_offset)
-    print('start_addr=%x' % start_addr)
-    print('goal_addr=%x' % goal_addr)
+    print(('heap_offset=%x' % heap_offset))
+    print(('start_addr=%x' % start_addr))
+    print(('goal_addr=%x' % goal_addr))
 
 #-------------------------------------------------------------------------------
 def find_shortest_path():
@@ -33,8 +33,8 @@ def get_cycles():
 
 #-------------------------------------------------------------------------------
 def return_answer(cost, cycles):
-    print('cost=', cost)
-    print('cycles=', cycles)
+    print(('cost=', cost))
+    print(('cycles=', cycles))
     iochannel.write(cost)
     iochannel.write(cycles)
 

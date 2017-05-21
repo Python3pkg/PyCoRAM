@@ -51,13 +51,13 @@ def main():
     global data_size
 
     mem_offset = iochannel.read()
-    print("thread: mem_offset=%d" % mem_offset)
+    print(("thread: mem_offset=%d" % mem_offset))
 
     dma_size = iochannel.read()
-    print("thread: dma_size=%d" % dma_size)
+    print(("thread: dma_size=%d" % dma_size))
 
     data_size = iochannel.read()
-    print("thread: data_size=%d" % data_size)
+    print(("thread: data_size=%d" % data_size))
 
     print("thread: sequential_write")
     cyclecount = sequential_write()

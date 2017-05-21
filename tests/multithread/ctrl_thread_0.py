@@ -9,6 +9,6 @@ def ctrl_thread():
         channel.write(addr)
         sum = channel.read()
         addr += 512
-    print('thread0 sum=', sum)
+    print(('thread0 sum=', sum))
 
 ctrl_thread()

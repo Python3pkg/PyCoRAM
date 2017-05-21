@@ -235,8 +235,8 @@ def mm_computation(matrix_size):
 def mm_main():
     loader_size = iochannel.read()
     matrix_size = iochannel.read()
-    print("thread: loader_size=%d" % loader_size)
-    print("thread: matrix_size=%d" % matrix_size)
+    print(("thread: loader_size=%d" % loader_size))
+    print(("thread: matrix_size=%d" % matrix_size))
 
     print("thread: mm_init")
     mm_init(loader_size)

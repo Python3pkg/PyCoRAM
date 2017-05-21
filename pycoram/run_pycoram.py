@@ -6,14 +6,14 @@
 # Copyright (C) 2013, Shinya Takamaeda-Yamazaki
 # License: Apache 2.0
 #-------------------------------------------------------------------------------
-from __future__ import absolute_import
-from __future__ import print_function
+
+
 import os
 import sys
 import glob
 from optparse import OptionParser
 if sys.version_info[0] < 3:
-    import ConfigParser as configparser
+    import configparser as configparser
 else:
     import configparser
 

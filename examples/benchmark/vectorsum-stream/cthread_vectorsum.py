@@ -44,10 +44,10 @@ def main():
     global data_size
 
     mem_offset = iochannel.read()
-    print("thread: mem_offset=%d" % mem_offset)
+    print(("thread: mem_offset=%d" % mem_offset))
 
     data_size = iochannel.read()
-    print("thread: data_size=%d" % data_size)
+    print(("thread: data_size=%d" % data_size))
 
     print("thread: vectorsum")
     rslt = vectorsum()

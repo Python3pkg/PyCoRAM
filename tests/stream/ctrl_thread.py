@@ -14,7 +14,7 @@ def ctrl_thread():
         sum = write_and_wait(instream, channel, addr, 128)
         outstream.read(addr + (1024 * 16), 128)
         addr += 512
-    print('sum=', sum)
+    print(('sum=', sum))
 
 ctrl_thread()
 

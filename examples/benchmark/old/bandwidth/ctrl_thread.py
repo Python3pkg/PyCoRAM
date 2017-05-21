@@ -54,7 +54,7 @@ def main():
     channel.write(USED_RAM_SIZE) # as SIMD
 
     for i in range(REPEAT):
-        print("loop %d" % i)
+        print(("loop %d" % i))
         read_addr += (USED_RAM_SIZE*4) * 2 * N_PAR
         
         sum = channel.read()
@@ -82,7 +82,7 @@ def main():
 
     channel.write(0)
 
-    print('sum=', sum)
+    print(('sum=', sum))
 
 #-------------------------------------------------------------------------------
 while True:

@@ -12,5 +12,5 @@ def generate(filename, temp_dict):
     rslt = template.render(temp_dict)
     return rslt
 
-print(generate(NAME, DICT))
+print((generate(NAME, DICT)))
 

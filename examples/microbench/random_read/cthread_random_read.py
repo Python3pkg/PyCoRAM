@@ -85,16 +85,16 @@ def main():
     global data_size
 
     mem_offset = iochannel.read()
-    print("thread: mem_offset=%d" % mem_offset)
+    print(("thread: mem_offset=%d" % mem_offset))
 
     address_width = iochannel.read()
-    print("thread: address_width=%d" % address_width)
+    print(("thread: address_width=%d" % address_width))
 
     dma_size = iochannel.read()
-    print("thread: dma_size=%d" % dma_size)
+    print(("thread: dma_size=%d" % dma_size))
 
     data_size = iochannel.read()
-    print("thread: data_size=%d" % data_size)
+    print(("thread: data_size=%d" % data_size))
 
     print("thread: random_read")
     cyclecount = random_read()

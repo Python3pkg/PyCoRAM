@@ -6,8 +6,8 @@
 # Copyright (C) 2013, Shinya Takamaeda-Yamazaki
 # License: Apache 2.0
 #-------------------------------------------------------------------------------
-from __future__ import absolute_import
-from __future__ import print_function
+
+
 import sys
 import os
 import re
@@ -95,7 +95,7 @@ class InstanceConvertVisitor(SignalVisitor):
         self.replaced_instance[actualkey].append(value)
 
     def mergeInstancelist(self):
-        for key, insts in self.replaced_instance.items():
+        for key, insts in list(self.replaced_instance.items()):
             head = self.mergeInstances(key, insts)
             self.merged_replaced_instance[key] = head
 
@@ -570,7 +570,7 @@ class InstanceReplaceVisitor(NodeVisitor):
         self.new_moduleinfotable = new_moduleinfotable
 
     def getAST(self):
-        modulelist = sorted([ m.definition for m in self.new_moduleinfotable.dict.values() ],
+        modulelist = sorted([ m.definition for m in list(self.new_moduleinfotable.dict.values()) ],
                             key=lambda x:x.name)
         new_modulelist = []
         for m in modulelist:

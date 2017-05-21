@@ -6,8 +6,8 @@
 # Copyright (C) 2013, Shinya Takamaeda-Yamazaki
 # License: Apache 2.0
 #-------------------------------------------------------------------------------
-from __future__ import absolute_import
-from __future__ import print_function
+
+
 import os
 import sys
 import ast
@@ -67,7 +67,7 @@ class CompileVisitor(ast.NodeVisitor):
         self.importfrom_list = {}
         self.vopt = vopt.VerilogOptimizer({}, default_width=default_width)
 
-        for func in functions.values():
+        for func in list(functions.values()):
             self.scope.addFunction(func)
         
     def dump(self):
@@ -85,31 +85,31 @@ class CompileVisitor(ast.NodeVisitor):
         registers_alias = {}
         iochannels_alias = {}
         ioregisters_alias = {}
-        for mk, mv in self.coram_memories.items():
+        for mk, mv in list(self.coram_memories.items()):
             if mv.name not in memories: memories[mv.name] = mv
             if mv.name not in memories_alias: memories_alias[mv.name] = []
             memories_alias[mv.name].append( mk )
-        for mk, mv in self.coram_instreams.items():
+        for mk, mv in list(self.coram_instreams.items()):
             if mv.name not in instreams: instreams[mv.name] = mv
             if mv.name not in instreams_alias: instreams_alias[mv.name] = []
             instreams_alias[mv.name].append( mk )
-        for mk, mv in self.coram_outstreams.items():
+        for mk, mv in list(self.coram_outstreams.items()):
             if mv.name not in outstreams: outstreams[mv.name] = mv
             if mv.name not in outstreams_alias: outstreams_alias[mv.name] = []
             outstreams_alias[mv.name].append( mk )
-        for mk, mv in self.coram_channels.items():
+        for mk, mv in list(self.coram_channels.items()):
             if mv.name not in channels: channels[mv.name] = mv
             if mv.name not in channels_alias: channels_alias[mv.name] = []
             channels_alias[mv.name].append( mk )
-        for mk, mv in self.coram_registers.items():
+        for mk, mv in list(self.coram_registers.items()):
             if mv.name not in registers: registers[mv.name] = mv
             if mv.name not in registers_alias: registers_alias[mv.name] = []
             registers_alias[mv.name].append( mk )
-        for mk, mv in self.coram_iochannels.items():
+        for mk, mv in list(self.coram_iochannels.items()):
             if mv.name not in iochannels: iochannels[mv.name] = mv
             if mv.name not in iochannels_alias: iochannels_alias[mv.name] = []
             iochannels_alias[mv.name].append( mk )
-        for mk, mv in self.coram_ioregisters.items():
+        for mk, mv in list(self.coram_ioregisters.items()):
             if mv.name not in ioregisters: ioregisters[mv.name] = mv
             if mv.name not in ioregisters_alias: ioregisters_alias[mv.name] = []
             ioregisters_alias[mv.name].append( mk )
@@ -120,7 +120,7 @@ class CompileVisitor(ast.NodeVisitor):
 
         if len(memories) > 0:
             print('  CoRAM CoramMemory:')
-        for mk, mv in sorted(memories.items(), key=lambda x:int(str(x[1].idx))):
+        for mk, mv in sorted(list(memories.items()), key=lambda x:int(str(x[1].idx))):
             slist = ['    ', str(mv), ' alias:']
             for a in memories_alias[mk]:
                 slist.append(' ')
@@ -129,7 +129,7 @@ class CompileVisitor(ast.NodeVisitor):
 
         if len(instreams) > 0:
             print('  CoRAM CoramInStream:')
-        for mk, mv in sorted(instreams.items(), key=lambda x:int(str(x[1].idx))):
+        for mk, mv in sorted(list(instreams.items()), key=lambda x:int(str(x[1].idx))):
             slist = ['    ', str(mv), ' alias:']
             for a in instreams_alias[mk]:
                 slist.append(' ')
@@ -138,7 +138,7 @@ class CompileVisitor(ast.NodeVisitor):
 
         if len(outstreams) > 0:
             print('  CoRAM CoramOutstream:')
-        for mk, mv in sorted(outstreams.items(), key=lambda x:int(str(x[1].idx))):
+        for mk, mv in sorted(list(outstreams.items()), key=lambda x:int(str(x[1].idx))):
             slist = ['    ', str(mv), ' alias:']
             for a in outstreams_alias[mk]:
                 slist.append(' ')
@@ -147,7 +147,7 @@ class CompileVisitor(ast.NodeVisitor):
 
         if len(channels) > 0:
             print('  CoRAM CoramChannel:')
-        for mk, mv in sorted(channels.items(), key=lambda x:int(str(x[1].idx))):
+        for mk, mv in sorted(list(channels.items()), key=lambda x:int(str(x[1].idx))):
             slist = ['    ', str(mv), ' alias:']
             for a in channels_alias[mk]:
                 slist.append(' ')
@@ -156,7 +156,7 @@ class CompileVisitor(ast.NodeVisitor):
 
         if len(registers) > 0:
             print('  CoRAM CoramRegister:')
-        for mk, mv in sorted(registers.items(), key=lambda x:int(str(x[1].idx))):
+        for mk, mv in sorted(list(registers.items()), key=lambda x:int(str(x[1].idx))):
             slist = ['    ', str(mv), ' alias:']
             for a in registers_alias[mk]:
                 slist.append(' ')
@@ -165,7 +165,7 @@ class CompileVisitor(ast.NodeVisitor):
 
         if len(iochannels) > 0:
             print('  CoRAM CoramIoChannel:')
-        for mk, mv in sorted(iochannels.items(), key=lambda x:int(str(x[1].idx))):
+        for mk, mv in sorted(list(iochannels.items()), key=lambda x:int(str(x[1].idx))):
             slist = ['    ', str(mv), ' alias:']
             for a in iochannels_alias[mk]:
                 slist.append(' ')
@@ -174,7 +174,7 @@ class CompileVisitor(ast.NodeVisitor):
 
         if len(ioregisters) > 0:
             print('  CoRAM CoramIoRegister:')
-        for mk, mv in sorted(ioregisters.items(), key=lambda x:int(str(x[1].idx))):
+        for mk, mv in sorted(list(ioregisters.items()), key=lambda x:int(str(x[1].idx))):
             slist = ['    ', str(mv), ' alias:']
             for a in ioregisters_alias[mk]:
                 slist.append(' ')
@@ -1837,7 +1837,7 @@ class ControlThreadGenerator(object):
         source_src = []
 
         if func is not None and function_lib is not None:
-            for name, global_func in function_lib.items():
+            for name, global_func in list(function_lib.items()):
                 source_src.append( inspect.getsource(global_func) )
 
         if filename is not None:

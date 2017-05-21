@@ -9,6 +9,6 @@ def ctrl_thread():
         sum = channel.read()
         ram.read(0, addr + (1024 * 16), 128) # BRAM -> DRAM
         addr += 512
-    print('sum=', sum)
+    print(('sum=', sum))
 
 ctrl_thread()

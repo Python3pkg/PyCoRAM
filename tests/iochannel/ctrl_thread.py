@@ -10,7 +10,7 @@ def ctrl_thread():
         channel.write(addr)
         sum = channel.read()
         addr += 512
-    print('sum=', sum)
+    print(('sum=', sum))
     iochannel.write(sum)
     for i in range(1000):
         pass

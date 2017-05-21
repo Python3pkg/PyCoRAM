@@ -123,13 +123,13 @@ def st_main():
     global b_offset
 
     mesh_size = iochannel.read()
-    print("thread: mesh_size=%d" % mesh_size)
+    print(("thread: mesh_size=%d" % mesh_size))
     num_iter = iochannel.read()
-    print("thread: num_iter=%d" % num_iter)
+    print(("thread: num_iter=%d" % num_iter))
     a_offset = iochannel.read()
-    print("thread: a_offset=%d" % a_offset)
+    print(("thread: a_offset=%d" % a_offset))
     b_offset = iochannel.read()
-    print("thread: b_offset=%d" % b_offset)
+    print(("thread: b_offset=%d" % b_offset))
 
     print("thread: st_set_mesh_size")
     st_set_mesh_size(mesh_size)

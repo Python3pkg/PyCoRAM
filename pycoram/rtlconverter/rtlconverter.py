@@ -6,8 +6,8 @@
 # Copyright (C) 2013, Shinya Takamaeda-Yamazaki
 # License: Apache 2.0
 #-------------------------------------------------------------------------------
-from __future__ import absolute_import
-from __future__ import print_function
+
+
 import sys
 import os
 import collections
@@ -47,7 +47,7 @@ class RtlConverter(object):
         coram_object = self.getCoramObject()
         print("----------------------------------------")
         print("CoRAM Objects in User-defined RTL")
-        for mode, coram_items in coram_object.items():
+        for mode, coram_items in list(coram_object.items()):
             print("  CoRAM %s" % mode)
             for threadname, idx, subid, addrwidth, datawidth in sorted(coram_items, key=lambda x:x[1]):
                 print("    %s(ID:%d%s Thread:%s AddrWidth:%s DataWidth:%s)" %
@@ -96,7 +96,7 @@ class RtlConverter(object):
         top_sigs = frametable.getSignals(top_scope)
         top_params = frametable.getConsts(top_scope)
 
-        for sk, sv in top_sigs.items():
+        for sk, sv in list(top_sigs.items()):
             if len(sk) > 2: continue
             signame = sk[1].scopename
             for svv in sv:
@@ -113,7 +113,7 @@ class RtlConverter(object):
                     self.top_ioports[signame] = (port, width)
                     break
 
-        for ck, cv in top_params.items():
+        for ck, cv in list(top_params.items()):
             if len(ck) > 2: continue
             signame = ck[1].scopename
             param = cv[0]

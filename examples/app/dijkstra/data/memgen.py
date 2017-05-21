@@ -56,7 +56,7 @@ def make_page_list(ofilename):
         of.write(odata)
         mem_size_pad += 4
 
-    for node_id, node in sorted(nodes.items(), key=lambda x:x[1].my_addr):
+    for node_id, node in sorted(list(nodes.items()), key=lambda x:x[1].my_addr):
         node.page_addr = page_addr
         num_of_edges = len(node.neighbors)
 
@@ -102,7 +102,7 @@ def make_node_list(ofilename):
     global mem_size_node
     global mem_size_pad
     of = open(ofilename, 'ab')
-    for node_id, node in sorted(nodes.items(), key=lambda x:x[1].my_addr):
+    for node_id, node in sorted(list(nodes.items()), key=lambda x:x[1].my_addr):
         odata = struct.pack('IIII', 0, 0xffffffff, node.page_addr, 0)
         of.write(odata)
         mem_size_node += 16
@@ -117,7 +117,7 @@ def make_idtb_list(ofilename):
     global mem_size_idtb
     global mem_size_pad
     of = open(ofilename, 'ab')
-    for node_id, node in sorted(nodes.items(), key=lambda x:x[1].my_addr):
+    for node_id, node in sorted(list(nodes.items()), key=lambda x:x[1].my_addr):
         odata = struct.pack('I', node.my_id)
         of.write(odata)
         mem_size_idtb += 4
@@ -133,7 +133,7 @@ def make_adtb_list(ofilename):
     global mem_size_pad
     of = open(ofilename, 'ab')
     last_id = -1
-    for node_id, node in sorted(nodes.items(), key=lambda x:x[1].my_id):
+    for node_id, node in sorted(list(nodes.items()), key=lambda x:x[1].my_id):
         for i in range(last_id, node_id-1, 1):
             odata = struct.pack('I', 0)
             of.write(odata)
@@ -235,13 +235,13 @@ if __name__ == '__main__':
     make_idtb_list(options.outputfile)
     make_adtb_list(options.outputfile)
 
-    print("# num of nodes: %d" % num_nodes)
-    print("# num of edges: %d" % num_edges)
+    print(("# num of nodes: %d" % num_nodes))
+    print(("# num of edges: %d" % num_edges))
     print("# memory map (size)")
-    print("# edge: %8x - %8x (%11d bytes)" % (PAGE_OFFSET, PAGE_OFFSET + mem_size_edge, mem_size_edge))
-    print("# node: %8x - %8x (%11d bytes)" % (NODE_OFFSET, NODE_OFFSET + mem_size_node, mem_size_node))
-    print("# idtb: %8x - %8x (%11d bytes)" % (IDTB_OFFSET, IDTB_OFFSET + mem_size_idtb, mem_size_idtb))
-    print("# adtb: %8x - %8x (%11d bytes)" % (ADTB_OFFSET, ADTB_OFFSET + mem_size_adtb, mem_size_adtb))
+    print(("# edge: %8x - %8x (%11d bytes)" % (PAGE_OFFSET, PAGE_OFFSET + mem_size_edge, mem_size_edge)))
+    print(("# node: %8x - %8x (%11d bytes)" % (NODE_OFFSET, NODE_OFFSET + mem_size_node, mem_size_node)))
+    print(("# idtb: %8x - %8x (%11d bytes)" % (IDTB_OFFSET, IDTB_OFFSET + mem_size_idtb, mem_size_idtb)))
+    print(("# adtb: %8x - %8x (%11d bytes)" % (ADTB_OFFSET, ADTB_OFFSET + mem_size_adtb, mem_size_adtb)))
 
     if PAGE_OFFSET + mem_size_edge > NODE_OFFSET:
         print("memory space for edges is not sufficient.")
@@ -256,4 +256,4 @@ if __name__ == '__main__':
         print("memory space for address table is not sufficient.")
 
     total_size = mem_size_node + mem_size_edge + mem_size_idtb + mem_size_adtb + mem_size_pad 
-    print('Total size: %d (0x%x)' % (total_size, total_size))
+    print(('Total size: %d (0x%x)' % (total_size, total_size)))

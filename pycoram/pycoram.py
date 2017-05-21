@@ -6,8 +6,8 @@
 # Copyright (C) 2013, Shinya Takamaeda-Yamazaki
 # License: Apache 2.0
 #-------------------------------------------------------------------------------
-from __future__ import absolute_import
-from __future__ import print_function
+
+
 import os
 import sys
 import math
@@ -88,7 +88,7 @@ class PycoramIp(object):
         print("----------------------------------------")
         print("Input files")
         print("  User-logic: %s" % ', '.join(self.rtl_files) )
-        print("  Control-thread: %s" % ', '.join(self.controlthreads.keys()) )
+        print("  Control-thread: %s" % ', '.join(list(self.controlthreads.keys())) )
         print("----------------------------------------")
         
         # default values
@@ -234,7 +234,7 @@ class SystemBuilder(object):
             
         # from func objects
         if controlthread_funcs is not None: 
-            for func_name, func in controlthread_funcs.items():
+            for func_name, func in list(controlthread_funcs.items()):
                 controlthread_codes.append(
                     generator.compile(func_name, func=func,
                                       function_lib=function_lib,
@@ -247,7 +247,7 @@ class SystemBuilder(object):
         # Template Render
         threads = []
         for tname, (tmemories, tinstreams, toutstreams, tchannels, tregisters, 
-                    tiochannels, tioregisters) in sorted(thread_status.items(), key=lambda x:x[0]):
+                    tiochannels, tioregisters) in sorted(list(thread_status.items()), key=lambda x:x[0]):
             threads.append(ControlThread(tname, tmemories, tinstreams, toutstreams, 
                                                       tchannels, tregisters, tiochannels, tioregisters))
 
@@ -257,14 +257,14 @@ class SystemBuilder(object):
         def_top_ioports = []
         name_top_ioports = []
 
-        for p in top_parameters.values():
+        for p in list(top_parameters.values()):
             r = asttocode.visit(p)
             if r.count('localparam'):
                 def_top_localparams.append( r )
             else:
                 def_top_parameters.append( r.replace(';', ',') )
 
-        for pk, (pv, pwidth) in top_ioports.items():
+        for pk, (pv, pwidth) in list(top_ioports.items()):
             if configs['if_type'] == 'avalon':
                 new_pv = copy.deepcopy(pv)
                 new_pv.name = 'coe_' + new_pv.name 
@@ -334,7 +334,7 @@ class SystemBuilder(object):
         # Print settings
         print("----------------------------------------")
         print("Synthesis Setting")
-        for k, v in sorted(configs.items(), key=lambda x:x[0]):
+        for k, v in sorted(list(configs.items()), key=lambda x:x[0]):
             print("  %s : %s" % (str(k), str(v)))
 
         # write to file, without AXI interfaces
@@ -387,7 +387,7 @@ class SystemBuilder(object):
 
         asttocode = ASTCodeGenerator()
 
-        for pk, pv in top_parameters.items():
+        for pk, pv in list(top_parameters.items()):
             r = asttocode.visit(pv)
             def_top_parameters.append( r )
             if r.count('localparam'):
@@ -398,7 +398,7 @@ class SystemBuilder(object):
             _dt = 'string' if r.count('"') else 'integer'
             mpd_parameters.append( (_name, _value, _dt) )
 
-        for pk, (pv, pwidth) in top_ioports.items():
+        for pk, (pv, pwidth) in list(top_ioports.items()):
             name_top_ioports.append( pk )
             new_pv = vast.Wire(pv.name, pv.width, pv.signed)
             def_top_ioports.append( asttocode.visit(new_pv) )
@@ -409,7 +409,7 @@ class SystemBuilder(object):
             _vec = '' if pv.width is None else asttocode.visit(pv.width) 
             mpd_ports.append( (_name, _dir, _vec) )
 
-        for pk, (pv, pwidth) in top_ioports.items():
+        for pk, (pv, pwidth) in list(top_ioports.items()):
             new_pv = vast.Wire(pv.name, pv.width, pv.signed)
             _name = pv.name
             _dir = ('in' if isinstance(pv, vast.Input) else
@@ -425,7 +425,7 @@ class SystemBuilder(object):
                     asttocode.visit(ir.replaceIdentifiers(pv.width.msb, _d)))
             ext_ports.append( (_name, _dir, _vec, _msb) )
 
-        for pk, pv in top_parameters.items():
+        for pk, pv in list(top_parameters.items()):
             r = asttocode.visit(pv)
             if r.count('localparam'):
                 def_top_localparams.append( r )
@@ -651,7 +651,7 @@ class SystemBuilder(object):
 
         asttocode = ASTCodeGenerator()
 
-        for pk, pv in top_parameters.items():
+        for pk, pv in list(top_parameters.items()):
             r = asttocode.visit(pv)
             def_top_parameters.append( r )
             if r.count('localparam'):
@@ -664,7 +664,7 @@ class SystemBuilder(object):
                    'STD_LOGIC_VECTOR')
             tcl_parameters.append( (_name, _value, _dt) )
 
-        for pk, (pv, pwidth) in top_ioports.items():
+        for pk, (pv, pwidth) in list(top_ioports.items()):
             name_top_ioports.append( pk )
             new_pv = vast.Wire(pv.name, pv.width, pv.signed)
             def_top_ioports.append( asttocode.visit(new_pv) )

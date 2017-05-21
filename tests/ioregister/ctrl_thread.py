@@ -11,14 +11,14 @@ def ctrl_thread():
     ioval = 0
     while ioval == 0:
         ioval = ioregister.read(0)
-        print('ioval=',ioval)
+        print(('ioval=',ioval))
         
     for i in range(8):
         ram.write(0, addr, 128) # from DRAM to BlockRAM
         channel.write(addr)
         sum = channel.read()
         addr += 512
-    print('sum=', sum)
+    print(('sum=', sum))
 
     ioregister.write(0, 0)
     ioregister.write(1, sum)

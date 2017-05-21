@@ -6,8 +6,8 @@
 # Copyright (C) 2013, Shinya Takamaeda-Yamazaki
 # License: Apache 2.0
 #-------------------------------------------------------------------------------
-from __future__ import absolute_import
-from __future__ import print_function
+
+
 import os
 import sys
 import math
@@ -45,25 +45,25 @@ class CodeGenerator(object):
         self.coram_iochannels = {}
         self.coram_ioregisters = {}
         
-        for c in coram_memories.values():
+        for c in list(coram_memories.values()):
             if c.name in self.coram_memories: continue
             self.coram_memories[c.name] = c
-        for c in coram_instreams.values():
+        for c in list(coram_instreams.values()):
             if c.name in self.coram_instreams: continue
             self.coram_instreams[c.name] = c
-        for c in coram_outstreams.values():
+        for c in list(coram_outstreams.values()):
             if c.name in self.coram_outstreams: continue
             self.coram_outstreams[c.name] = c
-        for c in coram_channels.values():
+        for c in list(coram_channels.values()):
             if c.name in self.coram_channels: continue
             self.coram_channels[c.name] = c
-        for c in coram_registers.values():
+        for c in list(coram_registers.values()):
             if c.name in self.coram_registers: continue
             self.coram_registers[c.name] = c
-        for c in coram_iochannels.values():
+        for c in list(coram_iochannels.values()):
             if c.name in self.coram_iochannels: continue
             self.coram_iochannels[c.name] = c
-        for c in coram_ioregisters.values():
+        for c in list(coram_ioregisters.values()):
             if c.name in self.coram_ioregisters: continue
             self.coram_ioregisters[c.name] = c
 
@@ -90,7 +90,7 @@ class CodeGenerator(object):
     #-------------------------------------------------------------------------
     def _prepareConstant(self):
         self.binds = self.scope.getBinds()
-        for name, bindlist in sorted(self.binds.items(), key=lambda x:x[1][0][0]): # younger state order
+        for name, bindlist in sorted(list(self.binds.items()), key=lambda x:x[1][0][0]): # younger state order
             if len(bindlist) > 1: continue
             for state, value, cond in bindlist:
                 opt_dfvalue = self.vopt.optimize(maketree.getDFTree(value))
@@ -110,19 +110,19 @@ class CodeGenerator(object):
 
     #-------------------------------------------------------------------------
     def _optimizeCoramArguments(self):
-        for memname, mem in self.coram_memories.items():
+        for memname, mem in list(self.coram_memories.items()):
             self.__set_coram_parameters(mem)
-        for memname, mem in self.coram_instreams.items():
+        for memname, mem in list(self.coram_instreams.items()):
             self.__set_coram_parameters(mem)
-        for memname, mem in self.coram_outstreams.items():
+        for memname, mem in list(self.coram_outstreams.items()):
             self.__set_coram_parameters(mem)
-        for memname, mem in self.coram_channels.items():
+        for memname, mem in list(self.coram_channels.items()):
             self.__set_coram_parameters(mem)
-        for memname, mem in self.coram_registers.items():
+        for memname, mem in list(self.coram_registers.items()):
             self.__set_coram_parameters(mem)
-        for memname, mem in self.coram_iochannels.items():
+        for memname, mem in list(self.coram_iochannels.items()):
             self.__set_coram_parameters(mem)
-        for memname, mem in self.coram_ioregisters.items():
+        for memname, mem in list(self.coram_ioregisters.items()):
             self.__set_coram_parameters(mem)
 
     #-------------------------------------------------------------------------
@@ -176,7 +176,7 @@ class CodeGenerator(object):
         already_defined = set([])
 
         # initial value (memory)
-        for memname, mem in self.coram_memories.items():
+        for memname, mem in list(self.coram_memories.items()):
             prefix = []
             prefix.append(mem.name)
             prefix.append('_')
@@ -187,7 +187,7 @@ class CodeGenerator(object):
             self.fsm.setBind(vast.Identifier(''.join(prefix+['write_enable'])), vast.IntConst('0'), 0)
 
         # initial value (instream)
-        for memname, mem in self.coram_instreams.items():
+        for memname, mem in list(self.coram_instreams.items()):
             prefix = []
             prefix.append(mem.name)
             prefix.append('_')
@@ -197,7 +197,7 @@ class CodeGenerator(object):
             self.fsm.setBind(vast.Identifier(''.join(prefix+['write_enable'])), vast.IntConst('0'), 0)
 
         # initial value (outstream)
-        for memname, mem in self.coram_outstreams.items():
+        for memname, mem in list(self.coram_outstreams.items()):
             prefix = []
             prefix.append(mem.name)
             prefix.append('_')
@@ -207,7 +207,7 @@ class CodeGenerator(object):
             self.fsm.setBind(vast.Identifier(''.join(prefix+['read_enable'])), vast.IntConst('0'), 0)
 
         # initial value (channel)
-        for memname, mem in self.coram_channels.items():
+        for memname, mem in list(self.coram_channels.items()):
             prefix = []
             prefix.append(mem.name)
             prefix.append('_')
@@ -218,7 +218,7 @@ class CodeGenerator(object):
             self.fsm.setBind(vast.Identifier(''.join(prefix+['deq'])), vast.IntConst('0'), 0)
 
         # initial value (register)
-        for memname, mem in self.coram_registers.items():
+        for memname, mem in list(self.coram_registers.items()):
             prefix = []
             prefix.append(mem.name)
             prefix.append('_')
@@ -228,7 +228,7 @@ class CodeGenerator(object):
             self.fsm.setBind(vast.Identifier(''.join(prefix+['we'])), vast.IntConst('0'), 0)
 
         # initial value (I/O channel)
-        for memname, mem in self.coram_iochannels.items():
+        for memname, mem in list(self.coram_iochannels.items()):
             prefix = []
             prefix.append(mem.name)
             prefix.append('_')
@@ -239,7 +239,7 @@ class CodeGenerator(object):
             self.fsm.setBind(vast.Identifier(''.join(prefix+['deq'])), vast.IntConst('0'), 0)
 
         # initial value (I/O register)
-        for memname, mem in self.coram_ioregisters.items():
+        for memname, mem in list(self.coram_ioregisters.items()):
             prefix = []
             prefix.append(mem.name)
             prefix.append('_')
@@ -249,7 +249,7 @@ class CodeGenerator(object):
             self.fsm.setBind(vast.Identifier(''.join(prefix+['we'])), vast.IntConst('0'), 0)
 
         self._clear_fsm_binds()
-        for state, bindlist in self.fsm.bind.items():
+        for state, bindlist in list(self.fsm.bind.items()):
             for bind in bindlist:
                 self._insertCommand_bind(bind, state)
         self._apply_fsm_binds()
@@ -736,7 +736,7 @@ class CodeGenerator(object):
         already_inserted = set([])
 
         # CoRAM memory port
-        for memname, mem in self.coram_memories.items():
+        for memname, mem in list(self.coram_memories.items()):
             prefix = []
             prefix.append(mem.name)
             prefix.append('_')
@@ -763,7 +763,7 @@ class CodeGenerator(object):
             portlist.append( vast.Ioport(vast.Input(''.join(prefix+['busy']))) )
 
         # CoRAM instream port
-        for memname, mem in self.coram_instreams.items():
+        for memname, mem in list(self.coram_instreams.items()):
             prefix = []
             prefix.append(mem.name)
             prefix.append('_')
@@ -785,7 +785,7 @@ class CodeGenerator(object):
             portlist.append( vast.Ioport(vast.Input(''.join(prefix+['busy']))) )
 
         # CoRAM outstream port
-        for memname, mem in self.coram_outstreams.items():
+        for memname, mem in list(self.coram_outstreams.items()):
             prefix = []
             prefix.append(mem.name)
             prefix.append('_')
@@ -807,7 +807,7 @@ class CodeGenerator(object):
             portlist.append( vast.Ioport(vast.Input(''.join(prefix+['busy']))) )
 
         # Channel Port
-        for memname, mem in self.coram_channels.items():
+        for memname, mem in list(self.coram_channels.items()):
             prefix = []
             prefix.append(mem.name)
             prefix.append('_')
@@ -829,7 +829,7 @@ class CodeGenerator(object):
             portlist.append( vast.Ioport(vast.Input(''.join(prefix+['almost_full']))) )
 
         # Register Port
-        for memname, mem in self.coram_registers.items():
+        for memname, mem in list(self.coram_registers.items()):
             prefix = []
             prefix.append(mem.name)
             prefix.append('_')
@@ -846,7 +846,7 @@ class CodeGenerator(object):
                                          vast.Reg(''.join(prefix+['d']), width=datawidth)) )
 
         # I/O Channel Port
-        for memname, mem in self.coram_iochannels.items():
+        for memname, mem in list(self.coram_iochannels.items()):
             prefix = []
             prefix.append(mem.name)
             prefix.append('_')
@@ -868,7 +868,7 @@ class CodeGenerator(object):
             portlist.append( vast.Ioport(vast.Input(''.join(prefix+['almost_full']))) )
 
         # I/O Register Port
-        for memname, mem in self.coram_ioregisters.items():
+        for memname, mem in list(self.coram_ioregisters.items()):
             prefix = []
             prefix.append(mem.name)
             prefix.append('_')
@@ -924,7 +924,7 @@ class CodeGenerator(object):
         fsm_reset = vast.Block( (fsm_reset_subs,) )
 
         fsm_caselist = []
-        for src, nodelist in self.fsm.dict.items():
+        for src, nodelist in list(self.fsm.dict.items()):
             case_cond = (vast.IntConst(str(src)),)
             case_stmt = []
             for node in nodelist:
@@ -959,7 +959,7 @@ class CodeGenerator(object):
         items = []
         bind_statement = []
         bind_caselist = {}
-        for state, bindlist in self.fsm.bind.items():
+        for state, bindlist in list(self.fsm.bind.items()):
             case_cond = (vast.IntConst(str(state)),)
             case_stmt = []
 

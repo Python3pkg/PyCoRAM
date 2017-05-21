@@ -6,8 +6,8 @@
 # Copyright (C) 2013, Shinya Takamaeda-Yamazaki
 # License: Apache 2.0
 #-------------------------------------------------------------------------------
-from __future__ import absolute_import
-from __future__ import print_function
+
+
 import os
 import sys
 
@@ -126,7 +126,7 @@ class Fsm(object):
         self.loop[begin] = (end, iter_node, step_node)
 
     def getCandidateLoops(self, pos):
-        candidates = [ (b, e) for b, (e, inode, unode) in self.loop.items() if b <= pos and pos <= e ]
+        candidates = [ (b, e) for b, (e, inode, unode) in list(self.loop.items()) if b <= pos and pos <= e ]
         return candidates
 
     def getLoops(self):
@@ -156,7 +156,7 @@ class Fsm(object):
     def getBindmap(self):
         # bind map for each destination
         bindmap = {}
-        for state, bindlist in self.bind.items():
+        for state, bindlist in list(self.bind.items()):
             for bind in bindlist:
                 if bind.dst is None:
                     continue
@@ -168,7 +168,7 @@ class Fsm(object):
     def getReadSet(self):
         # read set by CoRAM method
         read_set = {}
-        for state, bindlist in self.bind.items():
+        for state, bindlist in list(self.bind.items()):
             candidateloops = sorted(self.getCandidateLoops(state), key=lambda x:len(x))
             if len(candidateloops) == 0: continue
             innermostloop = candidateloops[0]
@@ -183,7 +183,7 @@ class Fsm(object):
     def getWriteSet(self):
         # write set of CoRAM method
         write_set = {}
-        for state, bindlist in self.bind.items():
+        for state, bindlist in list(self.bind.items()):
             candidateloops = sorted(self.getCandidateLoops(state), key=lambda x:len(x))
             if len(candidateloops) == 0: continue
             innermostloop = candidateloops[0]

@@ -46,8 +46,8 @@ def st_init():
     global num_iter
     mesh_size = init_channel.read()
     num_iter = init_channel.read()
-    print("thread: mesh_size=%d" % mesh_size)
-    print("thread: num_iter=%d" % num_iter)
+    print(("thread: mesh_size=%d" % mesh_size))
+    print(("thread: num_iter=%d" % num_iter))
 
 #-------------------------------------------------------------------------------
 def st_set_mesh_size(mesh_size):

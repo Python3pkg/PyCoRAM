@@ -73,13 +73,13 @@ def mm_main():
     global c_offset
 
     matrix_size = iochannel.read()
-    print("thread: matrix_size=%d" % matrix_size)
+    print(("thread: matrix_size=%d" % matrix_size))
     a_offset = iochannel.read()
-    print("thread: a_offset=%d" % a_offset)
+    print(("thread: a_offset=%d" % a_offset))
     b_offset = iochannel.read()
-    print("thread: b_offset=%d" % b_offset)
+    print(("thread: b_offset=%d" % b_offset))
     c_offset = iochannel.read()
-    print("thread: c_offset=%d" % c_offset)
+    print(("thread: c_offset=%d" % c_offset))
 
     print("thread: mm_set_matrix_size")
     mm_set_matrix_size(matrix_size)

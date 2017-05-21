@@ -185,8 +185,8 @@ def st_sum(mesh_size):
 def st_main():
     mesh_size = iochannel.read()
     num_iter = iochannel.read()
-    print("thread: mesh_size=%d" % mesh_size)
-    print("thread: num_iter=%d" % num_iter)
+    print(("thread: mesh_size=%d" % mesh_size))
+    print(("thread: num_iter=%d" % num_iter))
 
     print("thread: st_set_mesh_size")
     st_set_mesh_size(mesh_size)
